@@ -27,7 +27,7 @@
 
 {% block content %}
     <div class="spacing"></div>
-    <button class="btn-secondary" onclick="submit();">Submit</button>
+    <button class="btn-danger" onclick="submit();">Submit</button>
     <input  type="checkbox" id="mockSelector" />
     <label for="mockSelector">Mock?</label>
     <div class="row">
@@ -38,9 +38,10 @@
         <input type="hidden" class="gllpLongitude" id="pickerLon" value="6.853709299999999"/>
         <input type="hidden" class="gllpZoom" value="14"/>
     </div>
-
+    <div class="spacing"> </div>
     <div id="map" class="col-xs-12 col-md-6"></div>
     </div>
+    <div class="spacing"></div>
     <ul>
     {% for point in points %}
         <li>{{ point.lat }}, {{ point.lon }}</li>
