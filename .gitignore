@@ -2,4 +2,4 @@
 /static
 !/static/.gitkeep
 db.sqlite3
-
+*.pyc

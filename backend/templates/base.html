@@ -1,0 +1,71 @@
+
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{% static "ico/favicon.ico" %}">
+    <meta name="theme-color" content="#CB333B"/>
+    <title>Fizzbuzz</title>
+
+    {% block css %}
+    {% endblock css %}
+
+    <!-- IAPC less file word niet goed gecompresst -->
+    <link href="{% static "css/iapc.less" %}" rel="stylesheet/less" type="text/css">
+
+    <script src="{% static "js/less.js" %}"></script>
+
+    {% block js %}
+    {% endblock js %}
+</head>
+<body>
+{#    <!-- Navbar -->#}
+{#    <div class="navbar-wrapper">#}
+{#        <div class="container">#}
+
+<div class="navbar navbar-expand-lg navbar-dark bg-iapc fixed-top ">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="{{ home }}">
+                FizzBuzz
+            </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a class="nav-link" href="{{ home }}">Home</a>
+                </li>
+                <li ><a class="nav-link"
+                                                                                  href="www.google.com"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+{% block content %}
+    <div class="spacing"></div>
+    <div class="container">
+
+    </div>
+{% endblock %}
+</div>
+<div class="container page-footer">
+    <!-- FOOTER -->
+    <div class="spacing"></div>
+    <footer>
+        <p class="inline"></p>
+
+    </footer>
+    <div class="spacing"></div>
+</div><!-- /.container -->
+{% block endjs %}{% endblock %}
+</body>
+</html>
