@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <div id="map" style="width: 500px; height: 400px;"></div>
+    <ul>
+    {% for point in points %}
+        <li>{{ point.lat }}, {{ point.lon }}</li>
+    {% endfor %}
+    </ul>
+    <button onclick="submit();">Submit</button>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="{% static "/js/location-picker.min.js" %}"></script>
+    {% csrf_token %}
+    <script>
+        window.onload = function() {
+			var map = document.getElementById('map');
+
+			{#window.lp = new locationPicker(map, {}, {});#}
+            window.map = new google.maps.Map(map, {
+            	center: {lat: 52.2426, lng: 6.8536},
+                zoom: 16,
+            });
+
+			{% for point in points %}
+				new google.maps.Marker({
+					position: {lat: {{ point.lat }}, lng: {{ point.lon }} },
+					map: window.map,
+					title: "Pancake"
+				});
+			{% endfor %}
+		};
+
+        function submit() {
+			window.navigator.geolocation.getCurrentPosition(send_location);
+        }
+
+        function send_location(position) {
+			coords = position.coords;
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", window.location.href, true);
+			xhr.setRequestHeader('Content-Type', 'application/json');
+			xhr.setRequestHeader("X-CSRFToken", document.querySelector("[name=csrfmiddlewaretoken]").value);
+			xhr.send(JSON.stringify({
+				lat: coords.latitude,
+				lng: coords.longitude,
+			}));
+			window.location.reload();
+        }
+    </script>
+</body>
+</html>

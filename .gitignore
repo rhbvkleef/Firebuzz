@@ -1,0 +1,5 @@
+/.idea/
+/static
+!/static/.gitkeep
+db.sqlite3
+
