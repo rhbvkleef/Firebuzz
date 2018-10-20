@@ -7,18 +7,45 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
+    <link href="{% static "css/jquery-position-picker.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "css/ol2/theme/default/style.css" %}" rel="stylesheet" type="text/css" />
+    <style>
+        .gllpLatlonPicker, #map {
+            width: 500px !important;
+            height: 400px !important;
+        }
+
+        /* Ensure the gllpMap uses the full size of the
+         * gllpLatlonPicker. */
+        .gllpMap {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
 </head>
 <body>
-    <div id="map" style="width: 500px; height: 400px;"></div>
+    <button onclick="submit();">Submit</button>
+    <input type="checkbox" id="mockSelector" />
+    <label for="mockSelector">Mock?</label>
+    <div class="gllpLatlonPicker">
+        <div class="gllpMap"></div>
+        <br/>
+        <input type="hidden" class="gllpLatitude" id="pickerLat" value="52.242640699999995"/>
+        <input type="hidden" class="gllpLongitude" id="pickerLon" value="6.853709299999999"/>
+        <input type="hidden" class="gllpZoom" value="14"/>
+    </div>
+    <div id="map"></div>
     <ul>
     {% for point in points %}
         <li>{{ point.lat }}, {{ point.lon }}</li>
     {% endfor %}
     </ul>
-    <button onclick="submit();">Submit</button>
     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
             integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
             crossorigin=""></script>
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "js/OpenLayers.js" %}"></script>
+    <script src="{% static "js/jquery-position-picker.js" %}"></script>
     {% csrf_token %}
     <script>
         window.onload = function() {
@@ -36,7 +63,16 @@
 		};
 
         function submit() {
-			window.navigator.geolocation.getCurrentPosition(send_location);
+        	if (document.getElementById("mockSelector").checked) {
+        		send_location({
+                    coords: {
+                    	latitude: document.getElementById("pickerLat").value,
+                        longitude: document.getElementById("pickerLon").value,
+                    },
+                });
+            } else {
+				window.navigator.geolocation.getCurrentPosition(send_location);
+			}
         }
 
         function send_location(position) {
