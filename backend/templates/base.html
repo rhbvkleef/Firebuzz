@@ -13,6 +13,9 @@
     <meta name="theme-color" content="#CB333B"/>
     <title>Firebuzz</title>
 
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/lightbox.css" %}" rel="stylesheet">
+    <link href="{% static "css/all.min.css" %}" rel="stylesheet">
     {% block css %}
     {% endblock css %}
 
@@ -35,16 +38,14 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="{{ home }}">
+            <a class="navbar-brand" href="{% url 'index' %}">
                 Firebuzz
             </a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li><a class="nav-link" href="{{ home }}">Home</a>
-                </li>
-                <li ><a class="nav-link"
-                                                                                  href="www.google.com"></a></li>
+                <li><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                <li><a class="nav-link" href="{% url 'demo' %}">Demo</a></li>
             </ul>
         </div>
     </div>

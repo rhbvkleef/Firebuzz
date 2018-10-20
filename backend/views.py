@@ -19,3 +19,7 @@ class PickLocation(View):
         points = PointModel.objects.all()
         return HttpResponse(render(request, 'picker.html',
                                    context={"points": points}))
+
+
+def index(request):
+    return HttpResponse(render(request, 'index.html', {}))

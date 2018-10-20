@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import PickLocation
+from .views import PickLocation, index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', PickLocation.as_view())
+    path('demo/', PickLocation.as_view(), name='demo'),
+    path('', index, name='index'),
 ]
