@@ -29,17 +29,21 @@
 {% endblock %}
 
 {% block content %}
-    <button onclick="submit();">Submit</button>
-    <input type="checkbox" id="mockSelector" />
+    <div class="spacing"></div>
+    <button class="btn-secondary" onclick="submit();">Submit</button>
+    <input  type="checkbox" id="mockSelector" />
     <label for="mockSelector">Mock?</label>
-    <div class="gllpLatlonPicker">
+    <div class="row">
+    <div class="gllpLatlonPicker col-xs-12 col-md-6">
         <div class="gllpMap"></div>
         <br/>
         <input type="hidden" class="gllpLatitude" id="pickerLat" value="52.242640699999995"/>
         <input type="hidden" class="gllpLongitude" id="pickerLon" value="6.853709299999999"/>
         <input type="hidden" class="gllpZoom" value="14"/>
     </div>
-    <div id="map"></div>
+
+    <div id="map" class="col-xs-12 col-md-6"></div>
+    </div>
     <ul>
     {% for point in points %}
         <li>{{ point.lat }}, {{ point.lon }}</li>
