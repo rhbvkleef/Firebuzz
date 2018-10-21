@@ -4,7 +4,7 @@ from itertools import groupby
 from operator import itemgetter
 from typing import List, Any, Tuple
 
-from sklearn.cluster import MeanShift
+from sklearn.cluster import MeanShift, get_bin_seeds
 import numpy as np
 from scipy import spatial
 
@@ -13,7 +13,7 @@ from backend.models import Point
 
 def cluster(points: List[Point]):
     pts = np.array([[point.lon, point.lat] for point in points])
-    clustering = MeanShift(bandwidth=32).fit(pts)
+    clustering = MeanShift(bandwidth=2, seeds=get_bin_seeds(pts, 0.011)).fit(pts)
     return zip(clustering.labels_, points)
 
 
