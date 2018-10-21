@@ -26,23 +26,26 @@ def split(elems: List[Tuple[Any, Any]]):
 
 
 def circle_params(elems: List[Point]):
-    if len(elems) == 1:
-        return (elems[0].lat, elems[0].lon), 0
+    try:
+        if len(elems) == 1:
+            return (elems[0].lat, elems[0].lon), 0
 
-    if len(elems) == 2:
-        lat_r = abs(elems[0].lat - elems[1].lat)**2
-        lon_r = abs(elems[0].lon - elems[1].lon)**2
-        center = (elems[0].lat + elems[1].lat) / 2, (elems[0].lon + elems[1].lon) / 2
-        return center,\
-            distance(elems[0].lat, elems[1].lat, elems[0].lon, elems[1].lon)/2
+        if len(elems) == 2:
+            lat_r = abs(elems[0].lat - elems[1].lat)**2
+            lon_r = abs(elems[0].lon - elems[1].lon)**2
+            center = (elems[0].lat + elems[1].lat) / 2, (elems[0].lon + elems[1].lon) / 2
+            return center,\
+                distance(elems[0].lat, elems[1].lat, elems[0].lon, elems[1].lon)/2
 
-    elems = np.array([[elem.lon, elem.lat] for elem in elems])
-    candidates = elems[spatial.ConvexHull(elems).vertices]
-    dist_mat = spatial.distance_matrix(candidates, candidates)
-    i, j = np.unravel_index(dist_mat.argmax(), dist_mat.shape)
-    i, j = candidates[i], candidates[j]
-    center = (i[0] + j[0]) / 2, (i[1] + j[1]) / 2
-    return (center[1], center[0]), distance(i[0], j[0], i[1], j[1])/2
+        elems = np.array([[elem.lon, elem.lat] for elem in elems])
+        candidates = elems[spatial.ConvexHull(elems).vertices]
+        dist_mat = spatial.distance_matrix(candidates, candidates)
+        i, j = np.unravel_index(dist_mat.argmax(), dist_mat.shape)
+        i, j = candidates[i], candidates[j]
+        center = (i[0] + j[0]) / 2, (i[1] + j[1]) / 2
+        return (center[1], center[0]), distance(i[0], j[0], i[1], j[1])/2
+    except:
+        return (0, 0), 0
 
 
 def distance(lat_0, lat_1, lon_0, lon_1):
