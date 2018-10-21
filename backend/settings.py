@@ -26,7 +26,10 @@ SECRET_KEY = '&m&osbc7ty!a#_!s1^&&%=flmg$6jp$c52c9)=tz@y6!l!12^u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'kelt9b.co',
+    'www.kelt9b.co'
+]
 
 
 # Application definition
