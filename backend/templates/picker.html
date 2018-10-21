@@ -59,6 +59,12 @@
     <script src="{% static "js/jquery-position-picker.js" %}"></script>
     {% csrf_token %}
     <script>
+        window.circles = [{% for circle in circles %}
+            { lat: {{circle.0.0}}, lon: {{ circle.0.1 }}, r: {{ circle.1 }} },{% endfor %}
+        ];
+        window.points = [{% for point in points %}
+            { lat: {{ point.lat }}, lon: {{ point.lon }} },{% endfor %}
+        ];
         window.onload = function() {
 			var map = L.map('map').setView([52.242640699999995, 6.853709299999999], 14);
 			L.tileLayer('https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -67,15 +73,15 @@
 				id: 'base',
 			}).addTo(map);
 
-			{% for point in points %}
-				var marker = L.marker([{{ point.lat }}, {{ point.lon }}])
-                    .addTo(map);
-			{% endfor %}
-
-            {% for circle in circles %}
-				L.circle([{{ circle.0.0 }},{{ circle.0.1 }}], {{ circle.1 }})
-                    .addTo(map);
-            {% endfor %}
+			window.points.forEach(point => {
+				L.marker([point.lat, point.lon])
+					.addTo(map);
+            });
+			window.circles.filter(p => p.lat != 0 && p.lon != 0 && p.r != 0)
+                .forEach(point => {
+                	L.circle([point.lat, point.lon], point.r)
+                        .addTo(map);
+                });
 		};
 
         function submit() {
