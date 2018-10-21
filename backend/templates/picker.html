@@ -79,8 +79,11 @@
             });
 			window.circles.filter(p => p.lat != 0 && p.lon != 0 && p.r != 0)
                 .forEach(point => {
-                	L.circle([point.lat, point.lon], point.r)
-                        .addTo(map);
+                	L.circle([point.lat, point.lon], {
+						fillColor: '#f03',
+						color: 'red',
+                		radius: point.r,
+					}).addTo(map);
                 });
 		};
 
